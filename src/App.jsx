@@ -67,13 +67,13 @@ function App() {
     {isSmallScreen ? (
       <img 
         alt="Small Screen Logo"
-        src="./src/assets/smaller.png"
+        src="/src/assets/smaller.png"
         height={40}
       />
     ) : (
       <img 
         alt="Regular Logo"
-        src="./src/assets/logo.png"
+        src="/src/assets/logo.png"
         height={40}
       />
     )}
