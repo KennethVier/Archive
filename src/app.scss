@@ -1,0 +1,68 @@
+$table-bg: #9D71BC;
+$table-th-font-weight:800;
+$danger: #F4512C;
+$primary: #5E1B89;
+$success: #5E1B89;
+
+body {
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: linear-gradient(to top, #5E1B89, #F4512C);
+  }
+  
+  .hero {
+    width: 100%;
+    background-image: radial-gradient(
+    circle farthest-side at var(--x, 100px) var(--y, 100px),
+      #9D71BC 0%,
+      transparent 100%
+    );
+  }
+  
+  .edit-size {
+    font-size: 40px;
+    color: #F8FFFE;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+  }
+  
+  .task {
+    font-size: 60px;
+    color: #F8FFFE;
+    font-weight: bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+  }
+  
+  .formLabel {
+    color: #5E1B89;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+  }
+  .edit-font{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
+}
+
+
+  @media only screen and (max-width: 576px) {
+    .edit-size {
+      font-size: 30px;
+    }
+    .hero {
+      background: linear-gradient(to top, #5E1B89, #F4512C);
+    }
+    .task {
+      font-size: 40px;
+    }
+
+  }
+
+  @media only screen and (max-width: 992px) {
+    .hero {
+      background: linear-gradient(to top, #5E1B89, #F4512C);
+    }
+  }
+
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "bootstrap";
