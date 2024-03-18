@@ -66,13 +66,13 @@ function App() {
   <Navbar.Brand>
     {isSmallScreen ? (
       <img 
-        alt="Small Screen Logo"
+        alt="Lexmeet Logo for small screens"
         src="/src/assets/smaller.png"
         height={40}
       />
     ) : (
       <img 
-        alt="Regular Logo"
+        alt="Lexmeet Logo"
         src="/src/assets/logo.png"
         height={40}
       />
