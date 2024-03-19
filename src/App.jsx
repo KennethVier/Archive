@@ -67,13 +67,13 @@ function App() {
     {isSmallScreen ? (
       <img 
         alt="Lexmeet Logo for small screens"
-        src="../public/smaller.png"
+        src="../smaller.png"
         height={40}
       />
     ) : (
       <img 
         alt="Lexmeet Logo"
-        src="../public/logo.png"
+        src="../logo.png"
         height={40}
       />
     )}
