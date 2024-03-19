@@ -32,7 +32,11 @@ const TaskForm = ({ onSubmit, editedData, taskName }) => {
 
   const handleSubmit = (e, isUpdate) => {
     e.preventDefault();
-  
+    if (!task.trim()) {
+      alert('Please enter a task name.');
+      return;
+    }
+
     if (alertShown && new Date(endDate) < new Date()) {
       setShowAlert(true);
       return;

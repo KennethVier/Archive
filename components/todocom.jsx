@@ -308,14 +308,14 @@ class Todo extends Component {
         <Table className="mt-3 custom-table" bordered hover responsive >
           <thead className='text-center'>
             <tr>
-              <th className='edit-font'></th>
-              <th className='edit-font'>#</th>
-              <th className='edit-font'>Task</th>
-              <th className='edit-font'>Status</th>
-              <th className='edit-font'>Start Date</th>
-              <th className='edit-font'>Due by:</th>
-              <th className='edit-font'>Actions</th>
-              <th className='edit-font'>Completed by:</th>
+              <th className='edit-font' ></th>
+              <th className='edit-font' style={{color:'#F8FFFE'}}>#</th>
+              <th className='edit-font' style={{color:'#F8FFFE'}}>Task</th>
+              <th className='edit-font' style={{color:'#F8FFFE'}}>Status</th>
+              <th className='edit-font' style={{color:'#F8FFFE'}}>Start Date</th>
+              <th className='edit-font' style={{color:'#F8FFFE'}}>Due by:</th>
+              <th className='edit-font' style={{color:'#F8FFFE'}}>Actions</th>
+              <th className='edit-font' style={{color:'#F8FFFE'}}>Completed by:</th>
             </tr>
           </thead>
           <tbody className='text-center'>
@@ -334,7 +334,7 @@ class Todo extends Component {
                       : 'table-light'
                   }
                 >
-                  <td className='edit-font'>
+                  <td className='edit-font' >
                     <Form.Check
                       aria-label="option 1"
                       checked={this.state.checkedStatus[index] || false}
@@ -342,12 +342,12 @@ class Todo extends Component {
                       disabled={data.completedDate || data.status === 'Completed'}
                     />
                   </td>
-                  <td className='edit-font'>{index + 1}</td>
-                  <td className='edit-font'>{data.task}</td>
-                  <td className='edit-font'>{data.status}</td>
-                  <td className='edit-font'>{new Date(data.startDate).toLocaleString()}</td>
-                  <td className='edit-font'>{new Date(data.endDate).toLocaleString()}</td>
-                  <td className='edit-font '>
+                  <td className='edit-font' style={{color:'#5E1B89'}}>{index + 1}</td>
+                  <td className='edit-font' style={{color:'#5E1B89'}}>{data.task}</td>
+                  <td className='edit-font' style={{color:'#5E1B89'}}>{data.status}</td>
+                  <td className='edit-font' style={{color:'#5E1B89'}}>{new Date(data.startDate).toLocaleString()}</td>
+                  <td className='edit-font' style={{color:'#5E1B89'}}>{new Date(data.endDate).toLocaleString()}</td>
+                  <td className='edit-font' style={{color:'#5E1B89'}}>
                     <Button className='ms-0 ms-md-3 ' onClick={() => this.handleEdit(index)} disabled={data.completedDate || data.status === 'Completed'}>
                       <i className="bi bi-pencil-square"></i>
                     </Button>
@@ -355,7 +355,7 @@ class Todo extends Component {
                       <i className="bi bi-trash-fill"></i>
                     </Button>
                   </td>
-                  <td className='edit-font'>{data.completedDate}</td>
+                  <td className='edit-font' style={{color:'#5E1B89'}}>{data.completedDate}</td>
                 </tr>
               ))}
           </tbody>
