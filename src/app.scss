@@ -3,6 +3,10 @@ $table-th-font-weight:800;
 $danger: #F4512C;
 $primary: #5E1B89;
 $success: #5E1B89;
+$form-select-indicator-color: #5E1B89;
+$modal-content-color: #F8FFFE;
+$modal-content-bg: $danger;
+$nav-tabs-link-active-color:#FF7F4D;
 
   body {
     min-height: 100vh;
@@ -40,9 +44,13 @@ $success: #5E1B89;
     font-size: 20px;
     font-family: Georgia, 'Times New Roman', Times, serif;
   }
+  .form-color{
+    color: #F4512C;
+  }
   .edit-font{
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
+
 
 
   @media only screen and (max-width: 576px) {
@@ -66,3 +74,4 @@ $success: #5E1B89;
 
 @import "node_modules/bootstrap/scss/bootstrap";
 @import "bootstrap";
+@import "bootstrap/scss/bootstrap";

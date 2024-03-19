@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Container, Modal, Form } from 'react-bootstrap';
 import '../src/index.css';
+import '../src/app.scss';
 
 const TaskForm = ({ onSubmit, editedData, taskName }) => {
   const [task, setTask] = useState('');
@@ -109,21 +110,21 @@ const TaskForm = ({ onSubmit, editedData, taskName }) => {
       <Form onSubmit={handleSubmit} id="table">
         <Form.Group className="mb-3">
           <Form.Label className="formLabel">Task:</Form.Label>
-          <Form.Control type="text" value={task} onChange={(e) => setTask(e.target.value)} required placeholder="Enter Task Name" />
+          <Form.Control type="text" value={task} onChange={(e) => setTask(e.target.value)} required placeholder="Enter Task Name"  style={{ color: '#F4512C', '::placeholder': { color: '#F4512C' } }}/>
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label className="formLabel">Start Date:</Form.Label>
-          <Form.Control type="datetime-local" value={startDate} onChange={handleStartDateChange} required className="edit-font" ref={startDateRef} />
+          <Form.Control type="datetime-local" value={startDate} onChange={handleStartDateChange} required className="edit-font " ref={startDateRef} style={{color: '#F4512C'}}/>
         </Form.Group>
 
         <Form.Group className="mb-3">
           <Form.Label className="formLabel">End Date:</Form.Label>
-          <Form.Control type="datetime-local" value={endDate} onChange={handleEndDateChange} required={status !== 'Completed'} className="edit-font" ref={endDateRef} />
+          <Form.Control type="datetime-local" value={endDate} onChange={handleEndDateChange} required={status !== 'Completed'} className="edit-font " ref={endDateRef} style={{color: '#F4512C'}}/>
         </Form.Group>
 
         <Form.Group className="mb-3">
           <Form.Label className="formLabel">Status:</Form.Label>
-          <Form.Select value={status} onChange={(e) => setStatus(e.target.value)} required>
+          <Form.Select value={status} onChange={(e) => setStatus(e.target.value)} required  style={{color: '#F4512C'}}>
             <option className="edit-font" value="">
               Select Task Status
             </option>
