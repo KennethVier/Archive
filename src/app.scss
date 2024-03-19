@@ -4,8 +4,8 @@ $danger: #F4512C;
 $primary: #5E1B89;
 $success: #5E1B89;
 
-body {
-  height: 100%;
+html, body {
+    height: 100%;
     margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
