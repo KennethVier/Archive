@@ -105,8 +105,9 @@ const TaskForm = ({ onSubmit, editedData, taskName }) => {
 
   const handleStartDateChange = (e) => {
     setStartDate(e.target.value);
-    endDateRef.current.blur(); // Automatically blur the end date input after selecting the start date
+    startDateRef.current.blur(); // Automatically blur the start date input after selecting the start date
   };
+  
 
   const handleEndDateChange = (e) => {
     setEndDate(e.target.value);
