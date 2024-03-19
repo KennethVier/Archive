@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Container, Modal, Form } from 'react-bootstrap';
 import '../src/index.css';
@@ -13,6 +13,8 @@ const TaskForm = ({ onSubmit, editedData, taskName }) => {
   const [editMode, setEditMode] = useState(false);
   const [alertShown, setAlertShown] = useState(false);
   const [updateSuccess, setUpdateSuccess] = useState(false);
+  const startDateRef = useRef(null);
+  const endDateRef = useRef(null);
 
   useEffect(() => {
     if (editedData) {
@@ -83,7 +85,6 @@ const TaskForm = ({ onSubmit, editedData, taskName }) => {
     }
   };
   
-
   const handleUpdateSuccessModalClose = () => {
     setUpdateSuccess(false);
     if (taskRef.current) {
@@ -100,6 +101,16 @@ const TaskForm = ({ onSubmit, editedData, taskName }) => {
       default:
         return 'table-light';
     }
+  };
+
+  const handleStartDateChange = (e) => {
+    setStartDate(e.target.value);
+    endDateRef.current.blur(); // Automatically blur the end date input after selecting the start date
+  };
+
+  const handleEndDateChange = (e) => {
+    setEndDate(e.target.value);
+    endDateRef.current.blur(); // Automatically blur the end date input after selecting the end date
   };
 
   return (
@@ -137,12 +148,26 @@ const TaskForm = ({ onSubmit, editedData, taskName }) => {
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label className="formLabel">Start Date:</Form.Label>
-          <Form.Control type="datetime-local" value={startDate} onChange={(e) => setStartDate(e.target.value)} required className="edit-font" />
+          <Form.Control 
+            type="datetime-local" 
+            value={startDate} 
+            onChange={handleStartDateChange} 
+            required 
+            className="edit-font" 
+            ref={startDateRef} 
+          />
         </Form.Group>
 
         <Form.Group className="mb-3">
           <Form.Label className="formLabel">End Date:</Form.Label>
-          <Form.Control type="datetime-local" value={endDate} onChange={(e) => setEndDate(e.target.value)} required={status !== 'Completed'} className="edit-font" />
+          <Form.Control 
+            type="datetime-local" 
+            value={endDate} 
+            onChange={handleEndDateChange} 
+            required={status !== 'Completed'} 
+            className="edit-font" 
+            ref={endDateRef} 
+          />
         </Form.Group>
 
         <Form.Group className="mb-3">
@@ -170,8 +195,8 @@ const TaskForm = ({ onSubmit, editedData, taskName }) => {
           )}
           {editMode && (
             <Button className="submitfont me-2" type="submit" variant="flat" hover style={{ backgroundColor: '#5E1B89', color: '#FF7F4D', fontSize: '23px', fontWeight: 'bold', fontFamily: "Georgia, 'Times New Roman', Times, serif" }} onClick={(e) => handleSubmit(e, true)}>
-            Update
-          </Button>
+              Update
+            </Button>
           )}
         </div>
       </Form>
