@@ -10,7 +10,7 @@ const TaskForm = ({ onSubmit, editedData, taskName }) => {
   const [status, setStatus] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showUpdateSuccessModal, setShowUpdateSuccessModal] = useState(false);
   const startDateRef = useRef(null);
   const endDateRef = useRef(null);
 
@@ -48,12 +48,14 @@ const TaskForm = ({ onSubmit, editedData, taskName }) => {
 
     onSubmit(formData);
 
-    // Reset form fields
     setTask('');
     setStartDate('');
     setEndDate('');
     setStatus('');
-    setShowSuccessModal(true);
+
+    if (editedData) {
+      setShowUpdateSuccessModal(true);
+    }
   };
 
   const handleConfirmComplete = () => {
@@ -71,13 +73,17 @@ const TaskForm = ({ onSubmit, editedData, taskName }) => {
     endDateRef.current.blur();
   };
 
+  const handleUpdateSuccessModalClose = () => {
+    setShowUpdateSuccessModal(false);
+  };
+
   return (
     <Container fluid>
       <Modal show={showConfirmationModal} onHide={() => setShowConfirmationModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Confirmation</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Did you really complete the task? If yes, confirm.</Modal.Body>
+        <Modal.Body>Did you really complete the task? If yes, Confirm.</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowConfirmationModal(false)}>
             Cancel
@@ -88,7 +94,17 @@ const TaskForm = ({ onSubmit, editedData, taskName }) => {
         </Modal.Footer>
       </Modal>
 
-   
+      <Modal show={showUpdateSuccessModal} onHide={handleUpdateSuccessModalClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Success</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Your Task was successfully updated.</Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleUpdateSuccessModalClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
       <Form onSubmit={handleSubmit} id="table">
         <Form.Group className="mb-3">
