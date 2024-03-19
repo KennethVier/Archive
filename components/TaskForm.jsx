@@ -9,10 +9,8 @@ const TaskForm = ({ onSubmit, editedData, taskName }) => {
   const [endDate, setEndDate] = useState('');
   const [status, setStatus] = useState('');
   const [showAlert, setShowAlert] = useState(false);
-  const [rowClass, setRowClass] = useState('');
-  const [editMode, setEditMode] = useState(false);
-  const [alertShown, setAlertShown] = useState(false);
-  const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const startDateRef = useRef(null);
   const endDateRef = useRef(null);
 
@@ -22,15 +20,8 @@ const TaskForm = ({ onSubmit, editedData, taskName }) => {
       setStartDate(editedData.startDate || '');
       setEndDate(editedData.endDate || '');
       setStatus(editedData.status || '');
-      setRowClass(getRowClass(editedData.status));
-      setEditMode(true);
     }
   }, [editedData]);
-
-  const handleAlertClose = () => {
-    setShowAlert(false);
-    setAlertShown(true);
-  };
 
   const handleSubmit = (e, isUpdate) => {
     e.preventDefault();
@@ -39,108 +30,65 @@ const TaskForm = ({ onSubmit, editedData, taskName }) => {
       return;
     }
 
-    if (alertShown && new Date(endDate) < new Date()) {
-      setShowAlert(true);
+    if (status === 'Completed') {
+      setShowConfirmationModal(true);
       return;
     }
-  
+
+    handleSubmission();
+  };
+
+  const handleSubmission = () => {
     let formData = {
       task,
       startDate,
       endDate,
       status,
     };
-  
-    if (editedData && status === 'Completed') {
-      formData = {
-        ...formData,
-        completedDate: new Date().toLocaleString(),
-      };
-  
-      const dueDateObject = new Date(endDate);
-      const completedDateObject = new Date();
-  
-      if (completedDateObject > dueDateObject) {
-        setRowClass('table-danger');
-      } else {
-        setRowClass('table-success');
-      }
-    } else {
-      const dueDateObject = new Date(endDate);
-      if (dueDateObject < new Date() || dueDateObject.getTime() === new Date().getTime()) {
-        setShowAlert(true);
-        return;
-      }
-    }
-  
+
     onSubmit(formData);
+
+    // Reset form fields
     setTask('');
     setStartDate('');
     setEndDate('');
     setStatus('');
-    setEditMode(false);
-
-    if (isUpdate) {
-      setUpdateSuccess(true);
-    }
-  };
-  
-  const handleUpdateSuccessModalClose = () => {
-    setUpdateSuccess(false);
-    if (taskRef.current) {
-      taskRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
+    setShowSuccessModal(true);
   };
 
-  const getRowClass = (status) => {
-    switch (status) {
-      case 'Overdue':
-        return 'table-danger';
-      case 'Completed':
-        return 'table-success';
-      default:
-        return 'table-light';
-    }
+  const handleConfirmComplete = () => {
+    setShowConfirmationModal(false);
+    handleSubmission();
   };
 
   const handleStartDateChange = (e) => {
     setStartDate(e.target.value);
-    startDateRef.current.blur(); 
+    startDateRef.current.blur();
   };
-  
 
   const handleEndDateChange = (e) => {
     setEndDate(e.target.value);
-    endDateRef.current.blur(); 
+    endDateRef.current.blur();
   };
 
   return (
     <Container fluid>
-      {showAlert && status !== 'Overdue' && (
-        <Modal show={showAlert} onHide={handleAlertClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Error</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Due date should be in the future.</Modal.Body>
-          <Modal.Footer>
-            <Button variant="primary" onClick={handleAlertClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      )}
-
-      <Modal show={updateSuccess} onHide={handleUpdateSuccessModalClose}>
+      <Modal show={showConfirmationModal} onHide={() => setShowConfirmationModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Success</Modal.Title>
+          <Modal.Title>Confirmation</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Your Task was successfully updated.</Modal.Body>
+        <Modal.Body>Did you really complete the task? If yes, confirm.</Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleUpdateSuccessModalClose}>
-            Close
+          <Button variant="secondary" onClick={() => setShowConfirmationModal(false)}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleConfirmComplete}>
+            Confirm
           </Button>
         </Modal.Footer>
       </Modal>
+
+   
 
       <Form onSubmit={handleSubmit} id="table">
         <Form.Group className="mb-3">
@@ -149,26 +97,12 @@ const TaskForm = ({ onSubmit, editedData, taskName }) => {
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label className="formLabel">Start Date:</Form.Label>
-          <Form.Control 
-            type="datetime-local" 
-            value={startDate} 
-            onChange={handleStartDateChange} 
-            required 
-            className="edit-font" 
-            ref={startDateRef} 
-          />
+          <Form.Control type="datetime-local" value={startDate} onChange={handleStartDateChange} required className="edit-font" ref={startDateRef} />
         </Form.Group>
 
         <Form.Group className="mb-3">
           <Form.Label className="formLabel">End Date:</Form.Label>
-          <Form.Control 
-            type="datetime-local" 
-            value={endDate} 
-            onChange={handleEndDateChange} 
-            required={status !== 'Completed'} 
-            className="edit-font" 
-            ref={endDateRef} 
-          />
+          <Form.Control type="datetime-local" value={endDate} onChange={handleEndDateChange} required={status !== 'Completed'} className="edit-font" ref={endDateRef} />
         </Form.Group>
 
         <Form.Group className="mb-3">
@@ -184,21 +118,13 @@ const TaskForm = ({ onSubmit, editedData, taskName }) => {
               In Progress
             </option>
             {new Date(startDate) > new Date() && <option className="edit-font" value="Not Started">Not Started</option>}
-            {status === 'Overdue' && <option className="edit-font" value="Overdue">Overdue</option>}
           </Form.Select>
         </Form.Group>
 
         <div className="text-center">
-          {!editMode && (
-            <Button className="submitfont me-2" type="submit" variant="flat" hover style={{ backgroundColor: '#5E1B89', color: '#FF7F4D', fontSize: '23px', fontWeight: 'bold', fontFamily: "Georgia, 'Times New Roman', Times, serif" }}>
-              Submit
-            </Button>
-          )}
-          {editMode && (
-            <Button className="submitfont me-2" type="submit" variant="flat" hover style={{ backgroundColor: '#5E1B89', color: '#FF7F4D', fontSize: '23px', fontWeight: 'bold', fontFamily: "Georgia, 'Times New Roman', Times, serif" }} onClick={(e) => handleSubmit(e, true)}>
-              Update
-            </Button>
-          )}
+          <Button className="submitfont me-2" type="submit" variant="flat" hover style={{ backgroundColor: '#5E1B89', color: '#FF7F4D', fontSize: '23px', fontWeight: 'bold', fontFamily: "Georgia, 'Times New Roman', Times, serif" }}>
+            {editedData ? 'Update' : 'Submit'}
+          </Button>
         </div>
       </Form>
     </Container>
